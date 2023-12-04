@@ -10,11 +10,11 @@ class RedisClient {
     this.isConnected = false;
 
     this.client.on('error', (err) => {
-    console.log('Redis Client Error', err);
+      console.log('Redis Client Error', err);
     });
 
     this.client.on('connect', () => {
-    this.isConnected = true;
+      this.isConnected = true;
     });
 
     this.asyncSetX = promisify(this.client.setex).bind(this.client);
@@ -50,8 +50,10 @@ class RedisClient {
   /**
    * Retrieves the value associated with the given key.
    *
-   * @param {string} key - the key to retrieve the value for
-   * @return {*} the value associated with the given key
+   * @param {string} key - the key to set the value for
+   * @param {any} value - the value to set for the key
+   * @param {number} expiry - the time in seconds for the key to expire
+   * @return {Promise<void>} - a Promise that resolves when the key-value pair
    */
   get(key) {
     return this.asyncGet(key);
